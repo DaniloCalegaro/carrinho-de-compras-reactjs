@@ -11,9 +11,9 @@
 ---
 ## CheckList de desenvolvimento
 
+### Header
+- [ ] Receber o array cart do hook useCart e mostrar em tela a quantidade de produtos distintos adicionados ao carrinho
 ### Home
-
-Nesse arquivo, temos três pontos importantes a serem implementados:
 
 - [ ] **cartItemsAmount:** Deve possuir as informações da quantidade de cada produto no carrinho. Sugerimos criar um objeto utilizando `reduce` onde a chave representa o id do produto e o valor a quantidade do produto no carrinho. Exemplo: se você possuir no carrinho um produto de id 1 e quantidade 4 e outro produto de id 2 e quantidade 3, o objeto ficaria assim:
 
@@ -28,8 +28,6 @@ Nesse arquivo, temos três pontos importantes a serem implementados:
 - [ ] **handleAddProduct:** Deve adicionar o produto escolhido ao carrinho.
 
 ### Cart 
-
-Nesse arquivo, temos cinco pontos importantes a serem implementados:
 
 - [ ] **cartFormatted:** Deve formatar o carrinho adicionando os campos `priceFormatted` (preço do produto) e `subTotal` (preço do produto multiplicado pela quantidade) ambos devidamente formatados com o `utils/format`.
 - [ ] **total:** Deve possuir a informação do valor total do carrinho devidamente formatado com o `utils/format`.
