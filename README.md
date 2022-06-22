@@ -24,7 +24,7 @@
   }
   ```
 
-- [ ] **loadProducts:** Deve buscar os produtos da Fake API e formatar o preço utilizando o helper `utils/format`
+- [x] **loadProducts:** Deve buscar os produtos da Fake API e formatar o preço utilizando o helper `utils/format`
 - [ ] **handleAddProduct:** Deve adicionar o produto escolhido ao carrinho.
 
 ### Cart 
