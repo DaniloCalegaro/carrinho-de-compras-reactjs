@@ -23,11 +23,19 @@ interface CartItemsAmount {
 
 const Home = (): JSX.Element => {
   const [products, setProducts] = useState<ProductFormatted[]>([]);
-  // const { addProduct, cart } = useCart();
+  const { addProduct, cart } = useCart();
+
+  //console.log(cart)
 
   // const cartItemsAmount = cart.reduce((sumAmount, product) => {
   //   // TODO
   // }, {} as CartItemsAmount)
+
+  const testeCart = {
+    1: 4,
+	  2: 3,
+  }
+  localStorage.setItem('@RocketShoes:cart', JSON.stringify(testeCart))
 
   useEffect(() => {
     async function loadProducts() {
