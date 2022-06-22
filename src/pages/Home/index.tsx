@@ -47,10 +47,7 @@ const Home = (): JSX.Element => {
   
   function formatProduct(products: ProductFormatted[]){
     const productsFormated = products.map(product => {
-      product.priceFormatted = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(product.price);
+      product.priceFormatted = formatPrice(product.price);
       return product
     }) 
     return productsFormated
