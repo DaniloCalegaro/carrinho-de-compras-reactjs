@@ -23,7 +23,8 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const [cart, setCart] = useState<Product[]>(() => {
-    const storagedCart = localStorage.getItem('@RocketShoes:cart')
+    //const storagedCart = localStorage.getItem('@RocketShoes:cart')
+    const storagedCart= ''
 
     if (storagedCart) {
       return JSON.parse(storagedCart);
@@ -34,9 +35,32 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const addProduct = async (productId: number) => {
     try {
-      // TODO
+      // const existsInCard = cart.some(product => {
+      //   return product.id === productId
+      // })
+
+      const existsInCard = cart.find(product => product.id === productId)
+
+      if(existsInCard) {
+        // const newCart = cart.map(product => {
+        //   product.amount = product.id === productId ? product.amount + 1 : product.amount
+        //   return cart
+        // })
+        
+        //console.log(newCart)
+      } else {
+        const response = await api.get(`/products/${productId}`)
+        const newProductCart = {...response.data, amount: 1}
+        setCart([...cart, newProductCart])
+        //console.log(newProductCart)
+      }
+      //console.log(newCard)
+
+
+      //const newProductCart = {...response.data, amount: 1}
+      //setCart([...cart, newProductCart])
     } catch {
-      // TODO
+      toast.error('Quantidade solicitada fora de estoque');
     }
   };
 

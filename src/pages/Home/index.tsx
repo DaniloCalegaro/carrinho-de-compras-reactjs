@@ -31,11 +31,11 @@ const Home = (): JSX.Element => {
   //   // TODO
   // }, {} as CartItemsAmount)
 
-  const testeCart = {
-    1: 4,
-	  2: 3,
-  }
-  localStorage.setItem('@RocketShoes:cart', JSON.stringify(testeCart))
+  // const testeCart = {
+  //   1: 4,
+	//   2: 3,
+  // }
+  // localStorage.setItem('@RocketShoes:cart', JSON.stringify(testeCart))
 
   useEffect(() => {
     async function loadProducts() {
@@ -54,7 +54,7 @@ const Home = (): JSX.Element => {
   }
 
   function handleAddProduct(id: number) {
-    // TODO
+    addProduct(id)
   }
 
   return (
@@ -70,7 +70,7 @@ const Home = (): JSX.Element => {
           <button
             type="button"
             data-testid="add-product-button"
-          // onClick={() => handleAddProduct(product.id)}
+            onClick={() => handleAddProduct(product.id)}
           >
             <div data-testid="cart-product-quantity">
               <MdAddShoppingCart size={16} color="#FFF" />
