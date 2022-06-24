@@ -31,9 +31,9 @@
 
 - [ ] **cartFormatted:** Deve formatar o carrinho adicionando os campos `priceFormatted` (preço do produto) e `subTotal` (preço do produto multiplicado pela quantidade) ambos devidamente formatados com o `utils/format`.
 - [ ] **total:** Deve possuir a informação do valor total do carrinho devidamente formatado com o `utils/format`.
-- [ ] **handleProductIncrement:** Deve aumentar em 1 unidade a quantidade do produto escolhido ao carrinho.
-- [ ] **handleProductDecrement:** Deve diminuir em 1 unidade a quantidade do produto escolhido ao carrinho, onde o valor mínimo é 1 (nesse caso o botão deve estar desativado).
-- [ ] **handleRemoveProduct:** Deve remover o produto escolhido do carrinho.
+- [x] **handleProductIncrement:** Deve aumentar em 1 unidade a quantidade do produto escolhido ao carrinho.
+- [x] **handleProductDecrement:** Deve diminuir em 1 unidade a quantidade do produto escolhido ao carrinho, onde o valor mínimo é 1 (nesse caso o botão deve estar desativado).
+- [x] **handleRemoveProduct:** Deve remover o produto escolhido do carrinho.
 
 ### Hook UseCart
 
@@ -47,5 +47,5 @@ Os principais pontos a implementar:
 
 - [x] **cart:** Deve verificar se existe algum registro com o valor `@RocketShoes:cart` e retornar esse valor caso existir. Caso contrário, retornar um array vazio.
 - [x] **addProduct:** Deve adicionar um produto ao carrinho.
-- [ ] **removeProduct:** Deve remover um produto do carrinho.     
-- [ ] **updateProductAmount:** Deve atualizar a quantidade de um produto no carrinho. 
+- [x] **removeProduct:** Deve remover um produto do carrinho.     
+- [x] **updateProductAmount:** Deve atualizar a quantidade de um produto no carrinho. 

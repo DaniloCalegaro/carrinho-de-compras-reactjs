@@ -35,15 +35,23 @@ const Cart = (): JSX.Element => {
   //   )
 
   function handleProductIncrement(product: Product) {
-    // TODO
+    const cartItemIncrement = {
+      productId: product.id,
+      amount: product.amount + 1
+    }
+    updateProductAmount(cartItemIncrement)
   }
 
   function handleProductDecrement(product: Product) {
-    // TODO
+    const cartItemIncrement = {
+      productId: product.id,
+      amount: product.amount - 1
+    }
+    updateProductAmount(cartItemIncrement)
   }
 
   function handleRemoveProduct(productId: number) {
-    // TODO
+    removeProduct(productId)
   }
 
   return (
@@ -73,8 +81,8 @@ const Cart = (): JSX.Element => {
                   <button
                     type="button"
                     data-testid="decrement-product"
-                  // disabled={product.amount <= 1}
-                  // onClick={() => handleProductDecrement()}
+                    disabled={product.amount <= 1}
+                    onClick={() => handleProductDecrement(product)}
                   >
                     <MdRemoveCircleOutline size={20} />
                   </button>
@@ -87,7 +95,7 @@ const Cart = (): JSX.Element => {
                   <button
                     type="button"
                     data-testid="increment-product"
-                  // onClick={() => handleProductIncrement()}
+                    onClick={() => handleProductIncrement(product)}
                   >
                     <MdAddCircleOutline size={20} />
                   </button>
@@ -100,7 +108,7 @@ const Cart = (): JSX.Element => {
                 <button
                   type="button"
                   data-testid="remove-product"
-                // onClick={() => handleRemoveProduct(product.id)}
+                  onClick={() => handleRemoveProduct(product.id)}
                 >
                   <MdDelete size={20} />
                 </button>
