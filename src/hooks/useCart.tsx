@@ -54,14 +54,13 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           } 
           return productQuantity
         })
-
         setCart(newCart)
       } else {
         const response = await api.get(`/products/${productId}`)
         const newProductCart = {...response.data, amount: 1}
         setCart([...cart, newProductCart])
       }
-
+      toast.success('Produto adicionado ao carrinho')
     } catch(e) {
       const result = (e as Error).message;
       toast.error(result);
