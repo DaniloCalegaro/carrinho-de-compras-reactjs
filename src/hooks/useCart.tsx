@@ -51,19 +51,24 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         toast.info('Produto adicionado ao carrinho')
       }
     } catch(e) {
-      console.error(e)
+      //console.error(e)
       toast.error('Erro na adição do produto');
     }
   };
 
   const removeProduct = (productId: number) => {
     try {
-      const cartDeletedItem = cart.filter(product => (product.id !== productId))
-      setCart(cartDeletedItem)
-      setCartLocalStorage(cartDeletedItem)
+      const verifExistProduct = cart.some(product => product.id === productId)
+      if(verifExistProduct) {
+        const cartDeletedItem = cart.filter(product => (product.id !== productId))
+        setCart(cartDeletedItem)
+        setCartLocalStorage(cartDeletedItem)
+      } else {
+        throw new Error('Erro na remoção do produto')
+      }
+      
     } catch(e) {
       //const result = (e as Error).message;
-      console.error(e)
       toast.error('Erro na remoção do produto');
     }
   };
@@ -73,9 +78,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     amount,
   }: UpdateProductAmount) => {
     try {
-      const responseProductStock = await api.get(`/stock/${productId}`)
-      const amountStockProduct = responseProductStock.data.amount
-        
+      const verifExistProduct = cart.some(product => product.id === productId)
+      if(verifExistProduct) {
+        const responseProductStock = await api.get(`/stock/${productId}`)
+        const amountStockProduct = responseProductStock.data.amount
+          
         const newCart = cart.map(product => {
           let productQuantity = {...product}
           if(product.id === productId) {
@@ -87,11 +94,15 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           } 
           return productQuantity
         })
-      setCart(newCart)
-      setCartLocalStorage(newCart)
+        setCart(newCart)
+        setCartLocalStorage(newCart)
+      } else {
+        throw new Error('Erro na alteração de quantidade do produto')
+      }
+      
     } catch(e) {
-      console.error(e)
-      toast.error('Quantidade solicitada fora de estoque');
+      //const result = (e as Error).message;
+      toast.error("Quantidade solicitada fora de estoque");
     }
   };
 
