@@ -45,7 +45,7 @@ Ele é responsável por:
 
 Os principais pontos a implementar:
 
-- [ ] **cart:** Deve verificar se existe algum registro com o valor `@RocketShoes:cart` e retornar esse valor caso existir. Caso contrário, retornar um array vazio.
+- [x] **cart:** Deve verificar se existe algum registro com o valor `@RocketShoes:cart` e retornar esse valor caso existir. Caso contrário, retornar um array vazio.
 - [x] **addProduct:** Deve adicionar um produto ao carrinho.
 - [x] **removeProduct:** Deve remover um produto do carrinho.     
 - [x] **updateProductAmount:** Deve atualizar a quantidade de um produto no carrinho. 
