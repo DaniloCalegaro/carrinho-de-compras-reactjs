@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../services/api';
@@ -35,32 +36,35 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const addProduct = async (productId: number) => {
     try {
-      // const existsInCard = cart.some(product => {
-      //   return product.id === productId
-      // })
-
       const existsInCard = cart.find(product => product.id === productId)
 
       if(existsInCard) {
-        // const newCart = cart.map(product => {
-        //   product.amount = product.id === productId ? product.amount + 1 : product.amount
-        //   return cart
-        // })
+        const responseProductStock = await api.get(`/stock/${productId}`)
+        const amountStockProduct = responseProductStock.data.amount
         
-        //console.log(newCart)
+        
+        const newCart = cart.map(product => {
+          let productQuantity = {...product, amount: product.amount}
+          if(product.id === productId) {
+            if(product.amount < amountStockProduct){
+              productQuantity = {...product, amount: product.amount + 1}
+            } else {
+              throw new Error('Quantidade solicitada fora de estoque')
+            }
+          } 
+          return productQuantity
+        })
+
+        setCart(newCart)
       } else {
         const response = await api.get(`/products/${productId}`)
         const newProductCart = {...response.data, amount: 1}
         setCart([...cart, newProductCart])
-        //console.log(newProductCart)
       }
-      //console.log(newCard)
 
-
-      //const newProductCart = {...response.data, amount: 1}
-      //setCart([...cart, newProductCart])
-    } catch {
-      toast.error('Quantidade solicitada fora de estoque');
+    } catch(e) {
+      const result = (e as Error).message;
+      toast.error(result);
     }
   };
 

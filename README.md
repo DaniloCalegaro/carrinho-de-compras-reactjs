@@ -25,7 +25,7 @@
   ```
 
 - [x] **loadProducts:** Deve buscar os produtos da Fake API e formatar o preço utilizando o helper `utils/format`
-- [ ] **handleAddProduct:** Deve adicionar o produto escolhido ao carrinho.
+- [x] **handleAddProduct:** Deve adicionar o produto escolhido ao carrinho.
 
 ### Cart 
 
@@ -46,6 +46,6 @@ Ele é responsável por:
 Os principais pontos a implementar:
 
 - [x] **cart:** Deve verificar se existe algum registro com o valor `@RocketShoes:cart` e retornar esse valor caso existir. Caso contrário, retornar um array vazio.
-- [ ] **addProduct:** Deve adicionar um produto ao carrinho.
+- [x] **addProduct:** Deve adicionar um produto ao carrinho.
 - [ ] **removeProduct:** Deve remover um produto do carrinho.     
 - [ ] **updateProductAmount:** Deve atualizar a quantidade de um produto no carrinho. 
