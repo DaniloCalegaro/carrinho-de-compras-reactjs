@@ -51,7 +51,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         toast.info('Produto adicionado ao carrinho')
       }
     } catch(e) {
-      //console.error(e)
       toast.error('Erro na adição do produto');
     }
   };
@@ -68,8 +67,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
       
     } catch(e) {
-      //const result = (e as Error).message;
-      toast.error('Erro na remoção do produto');
+      const result = (e as Error).message;
+      toast.error(result);
     }
   };
 
@@ -78,6 +77,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     amount,
   }: UpdateProductAmount) => {
     try {
+
       const verifExistProduct = cart.some(product => product.id === productId)
       if(verifExistProduct) {
         const responseProductStock = await api.get(`/stock/${productId}`)
@@ -86,10 +86,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         const newCart = cart.map(product => {
           let productQuantity = {...product}
           if(product.id === productId) {
-            if(amount <= amountStockProduct){
+            if(amount <= amountStockProduct && amount >= 1){
               productQuantity = {...product, amount: amount}
             } else {
-              throw new Error()
+              throw new Error("Quantidade solicitada fora de estoque")
             }
           } 
           return productQuantity
@@ -101,8 +101,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
       
     } catch(e) {
-      //const result = (e as Error).message;
-      toast.error("Quantidade solicitada fora de estoque");
+      const result = (e as Error).message;
+      toast.error(result);
     }
   };
 
