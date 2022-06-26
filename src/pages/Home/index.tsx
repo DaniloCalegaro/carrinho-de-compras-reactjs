@@ -30,12 +30,6 @@ const Home = (): JSX.Element => {
     return sumAmount
   }, {} as CartItemsAmount)
 
-  // const testeCart = {
-  //   1: 4,
-	//   2: 3,
-  // }
-  // localStorage.setItem('@RocketShoes:cart', JSON.stringify(testeCart))
-
   useEffect(() => {
     async function loadProducts() {
       api.get('/products')
@@ -57,9 +51,7 @@ const Home = (): JSX.Element => {
   }
 
   return (
-    
     <ProductList>
-
       {products.map(product => {
         return (
         <li key={product.id}>
@@ -82,7 +74,6 @@ const Home = (): JSX.Element => {
         )
       }
       )}
-      
     </ProductList>
   );
 };

@@ -6,9 +6,6 @@ import {
 } from 'react-icons/md';
 import { useCart } from '../../hooks/useCart';
 import { formatPrice } from '../../util/format';
-
-// import { useCart } from '../../hooks/useCart';
-// import { formatPrice } from '../../util/format';
 import { Container, ProductTable, Total } from './styles';
 
 interface Product {
@@ -21,8 +18,6 @@ interface Product {
 
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
-
-  //console.log(cart[0])
 
   const cartFormatted = cart.map(product => ({
     id: product.id,
@@ -38,7 +33,6 @@ const Cart = (): JSX.Element => {
         return sumTotal += product.amount * product.price
       }, 0)
     )
-  //console.log(total)
 
   function handleProductIncrement(product: Product) {
     const cartItemIncrement = {

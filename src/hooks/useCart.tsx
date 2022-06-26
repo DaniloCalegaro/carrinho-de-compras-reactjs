@@ -24,7 +24,6 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const [cart, setCart] = useState<Product[]>(() => {
     const storagedCart = localStorage.getItem('@RocketShoes:cart')
-    //const storagedCart= ''
 
     if (storagedCart) {
       return JSON.parse(storagedCart);
@@ -77,7 +76,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     amount,
   }: UpdateProductAmount) => {
     try {
-
       const verifExistProduct = cart.some(product => product.id === productId)
       if(verifExistProduct) {
         const responseProductStock = await api.get(`/stock/${productId}`)
