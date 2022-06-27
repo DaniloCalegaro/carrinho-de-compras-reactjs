@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../services/api';
 import { Product } from '../types';
@@ -32,10 +32,24 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     return [];
   });
 
+ const prevCartRef = useRef<Product[]>()
+
+ useEffect(() => {
+  prevCartRef.current = cart;
+ })
+
+ const cartPreviousValue = prevCartRef.current ?? cart
+
+ useEffect(() => {
+  if (cartPreviousValue !== cart) {
+    localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart))
+  }
+ }, [cart, cartPreviousValue])
+
   const addProduct = async (productId: number) => {
     try {
       const updateCart = [...cart]
-      const productExists = cart.find(product => product.id === productId)
+      const productExists = updateCart.find(product => product.id === productId)
 
       const stock = await api.get(`/stock/${productId}`)
 
@@ -62,59 +76,56 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
 
       setCart(updateCart)
-      localStorage.setItem('@RocketShoes:cart', JSON.stringify(updateCart))
-    } catch(e) {
+    } catch {
       toast.error('Erro na adição do produto');
     }
   };
 
   const removeProduct = (productId: number) => {
     try {
-      const verifExistProduct = cart.some(product => product.id === productId)
-      if(verifExistProduct) {
-        const cartDeletedItem = cart.filter(product => (product.id !== productId))
-        setCart(cartDeletedItem)
-        setCartLocalStorage(cartDeletedItem)
+      const updateCart = [...cart]
+      const productIndex = updateCart.findIndex(product => product.id === productId)
+      if(productIndex >= 0) {
+        updateCart.splice(productIndex, 1)
+        setCart(updateCart)
       } else {
-        throw new Error('Erro na remoção do produto')
+        throw Error()
       }
       
-    } catch(e) {
-      const result = (e as Error).message;
-      toast.error(result);
+    } catch {
+      toast.error('Erro na remoção do produto');
     }
   };
-
+      
   const updateProductAmount = async ({
     productId,
     amount,
   }: UpdateProductAmount) => {
     try {
-      const verifExistProduct = cart.some(product => product.id === productId)
-      if(verifExistProduct) {
-        const responseProductStock = await api.get(`/stock/${productId}`)
-        const amountStockProduct = responseProductStock.data.amount
-          
-        const newCart = cart.map(product => {
-          let productQuantity = {...product}
-          if(product.id === productId) {
-            if(amount <= amountStockProduct && amount >= 1){
-              productQuantity = {...product, amount: amount}
-            } else {
-              throw new Error("Quantidade solicitada fora de estoque")
-            }
-          } 
-          return productQuantity
-        })
-        setCart(newCart)
-        setCartLocalStorage(newCart)
-      } else {
-        throw new Error('Erro na alteração de quantidade do produto')
+      if(amount <= 0) {
+        return
       }
       
+      const stock = await api.get(`/stock/${productId}`)
+      const stockAmount = stock.data.amount
+
+      if(amount > stockAmount){
+        toast.error("Quantidade solicitada fora de estoque")
+        return
+      }
+
+      const updateCart = [...cart]
+      const productExists = updateCart.find(product => product.id === productId)
+
+      if(productExists) {
+        productExists.amount = amount
+        setCart(updateCart)
+      } else {
+        throw Error()
+      }
+
     } catch(e) {
-      const result = (e as Error).message;
-      toast.error(result);
+      toast.error('Erro na alteração de quantidade do produto');
     }
   };
 
@@ -125,10 +136,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       {children}
     </CartContext.Provider>
   );
-}
-
-function setCartLocalStorage(cart: Product[]){
-  localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart))
 }
 
 export function useCart(): CartContextData {
