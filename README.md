@@ -41,7 +41,7 @@ Time:        7.862 s, estimated 8 s
 Ran all test suites.
 ````
 
-Na `brand: feature-correction` tem a correção do código para ficar semântico e seguir os princípios da imutabilidade.
+Na `brand: feature-correction` possui a correção do código para ficar semântico e seguir os princípios da imutabilidade.
 
 Foi um desafio muito grande, principalmente pela quantidade de testes no qual deveria se passar, mais com muita dedicação e persistência sempre evoluímos.
 
